@@ -1,4 +1,4 @@
-# Heatmap Photo
+# Heat Map Photo
 
 Python program to overlay a heatmap on a photo from Unity outputted coordinates.
 
