@@ -210,7 +210,7 @@ def analyze_image(image_path, input_csv, name):
         draw_heatmap(gaze_data, (display_width, display_height), alpha=alpha, savefilename=output_name,
                      imagefile=background_image, gaussianwh=ngaussian, gaussiansd=sd)
     finished = True
-    exit()
+    #exit()
 
 
 def is_complete():

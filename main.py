@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import filedialog
 import os
 import imageHandling
+import preprocessing
 
 
 csv_data = []
@@ -13,10 +14,16 @@ win.geometry("750x550")
 win.title("Unity Coordinates Heatmap")
 
 def run():
-   if (len(csv_data) >= 1) and (len(video_data) >= 1):
+    if (len(csv_data) >= 1) and (len(video_data) >= 1):
        csv_path = csv_data[0]
-       vid_path = video_data[0]
-       imageHandling.analyze_image(vid_path, csv_path, "output")
+       img_path = video_data[0]
+       img_length = imageHandling.get_specs(img_path)[0]
+       preprocessing.reformat(csv_path, 2, img_length)
+       name = csv_path.split("/")[-1]
+       name = name[:-4] + "_heatmap"
+       imageHandling.analyze_image(img_path, 'temp.csv', name)
+       os.remove('temp.csv')
+       exit()
 
 
 def open_csv():
@@ -33,9 +40,9 @@ def open_vid():
     types = [('image files', '*.png')]
     file = filedialog.askopenfile(mode='r', filetypes=types)
     if file:
-        vid_path = str(os.path.abspath(file.name))
-        Label(win, text="Input Image : " + vid_path, font=('Helvetica 14')).pack()
-        video_data.append(vid_path)
+        img_path = str(os.path.abspath(file.name))
+        Label(win, text="Input Image : " + img_path, font=('Helvetica 14')).pack()
+        video_data.append(img_path)
 
 # Label and buttons
 Label(win, text="Import image and coordinate data", font=('Helvetica 14 bold')).pack(pady=20)
